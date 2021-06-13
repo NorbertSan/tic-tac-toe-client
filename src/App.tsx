@@ -1,14 +1,35 @@
 import React from "react";
 import "./App.css";
-import GamesList from "./components/GamesList/GamesList";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
+import Login from "./views/Login/Login";
+import Lobby from "./views/Lobby/Lobby";
 import Header from "./components/Header/Header";
+import AuthGuard from "./guards/AuthGuard";
 
 const App: React.FC = () => {
   return (
-    <section>
+    <Router>
       <Header />
-      <GamesList />
-    </section>
+      <Switch>
+        <Route exact path="/">
+          <Redirect to="/login" />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/list">
+          <AuthGuard>
+            <Lobby />
+          </AuthGuard>
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 
