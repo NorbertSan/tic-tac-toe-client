@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { LOCAL_STORAGE_NAME_KEY } from "../constants/local-storage-keys";
 
 export interface IUserNameContext {
   userName: string | null;
@@ -17,8 +18,6 @@ export const UserNameContext = React.createContext<IUserNameContext>(
 interface IUserNameProvider {
   children: React.ReactElement<any, any> | null;
 }
-
-const LOCAL_STORAGE_NAME_KEY = "userName";
 
 export const UserNameProvider: React.FC<IUserNameProvider> = ({ children }) => {
   const [userName, setUserName] = useState<string | null>(null);

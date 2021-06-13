@@ -4,14 +4,13 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from "react-router-dom";
 import Login from "./views/Login/Login";
-import Lobby from "./views/Lobby/Lobby";
 import Header from "./components/Header/Header";
 import AuthGuard from "./guards/AuthGuard";
 import { UserNameProvider } from "./context/UserNameContext";
+import GamesList from "./components/GamesList/GamesList";
 
 const App: React.FC = () => {
   return (
@@ -28,7 +27,7 @@ const App: React.FC = () => {
             </Route>
             <Route path="/list">
               <AuthGuard>
-                <Lobby />
+                <GamesList />
               </AuthGuard>
             </Route>
             <Route>

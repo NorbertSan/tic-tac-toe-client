@@ -6,6 +6,7 @@ import {
   IUserNameContext,
   UserNameContext,
 } from "../../context/UserNameContext";
+import { LOCAL_STORAGE_NAME_KEY } from "../../constants/local-storage-keys";
 
 const layout = {
   labelCol: { span: 8 },
@@ -25,6 +26,7 @@ const Login: React.FC = () => {
   }
 
   const onFinish = (formValues: IFormValues): void => {
+    localStorage.setItem(LOCAL_STORAGE_NAME_KEY, formValues.userName);
     onUserNameChange(formValues.userName);
   };
 
