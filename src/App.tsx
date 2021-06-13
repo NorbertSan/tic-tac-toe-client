@@ -1,5 +1,8 @@
+import { Button } from "antd";
+import "./App.css";
+
 const App = () => {
-  return <div className="App">app</div>;
+  return <Button type="primary">I am button</Button>;
 };
 
 export default App;
