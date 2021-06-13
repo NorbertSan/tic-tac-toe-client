@@ -1,8 +1,15 @@
-import { Button } from "antd";
+import React from "react";
 import "./App.css";
+import GamesList from "./components/GamesList/GamesList";
+import Header from "./components/Header/Header";
 
-const App = () => {
-  return <Button type="primary">I am button</Button>;
+const App: React.FC = () => {
+  return (
+    <section>
+      <Header />
+      <GamesList />
+    </section>
+  );
 };
 
 export default App;
