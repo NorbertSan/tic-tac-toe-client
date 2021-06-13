@@ -1,13 +1,13 @@
+import { useContext } from "react";
 import { Redirect } from "react-router-dom";
-
-const LOCAL_STORAGE_NAME_KEY = "userName";
+import { UserNameContext, IUserNameContext } from "../context/UserNameContext";
 
 interface IAuthGuard {
   children: React.ReactElement<any, any> | null;
 }
 
 const AuthGuard: React.FC<IAuthGuard> = ({ children }) => {
-  const userName: string | null = localStorage.getItem(LOCAL_STORAGE_NAME_KEY);
+  const { userName } = useContext<IUserNameContext>(UserNameContext);
 
   if (!userName) {
     return <Redirect to="/login" />;
