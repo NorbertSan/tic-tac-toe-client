@@ -3,7 +3,7 @@ import { IGame } from "../../../services/GamesService/IGamesService";
 import { Button } from "antd";
 import { IGameKey } from "./OpenGames";
 
-type IJoinGame = () => void;
+type IJoinGame = (gameId: string) => void;
 
 export const getGamesListColumns: (
   joinGame: IJoinGame
@@ -21,8 +21,8 @@ export const getGamesListColumns: (
   {
     title: "Action",
     key: "action",
-    render: () => (
-      <Button onClick={joinGame} type="primary">
+    render: (text, item) => (
+      <Button onClick={() => joinGame(item.gameId)} type="primary">
         Join
       </Button>
     ),

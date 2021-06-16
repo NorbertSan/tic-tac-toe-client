@@ -17,3 +17,7 @@ export interface IGame {
   board: IBoard;
   winner: string;
 }
+
+export interface ICreateGame {
+  player1: string;
+}

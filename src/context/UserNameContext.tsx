@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { LOCAL_STORAGE_NAME_KEY } from "../constants/local-storage-keys";
+import React, { useState } from "react";
+import { getUserNameFromLocalStorage } from "../helpers/local-storage-helpers";
 
 export interface IUserNameContext {
   userName: string | null;
@@ -20,11 +20,9 @@ interface IUserNameProvider {
 }
 
 export const UserNameProvider: React.FC<IUserNameProvider> = ({ children }) => {
-  const [userName, setUserName] = useState<string | null>(null);
-
-  useEffect(() => {
-    setUserName(localStorage.getItem(LOCAL_STORAGE_NAME_KEY));
-  }, []);
+  const [userName, setUserName] = useState<string | null>(
+    getUserNameFromLocalStorage()
+  );
 
   const value: IUserNameContext = {
     userName,

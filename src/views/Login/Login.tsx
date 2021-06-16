@@ -6,7 +6,7 @@ import {
   IUserNameContext,
   UserNameContext,
 } from "../../context/UserNameContext";
-import { LOCAL_STORAGE_NAME_KEY } from "../../constants/local-storage-keys";
+import { setUserNameToLocalStorage } from "../../helpers/local-storage-helpers";
 
 const layout = {
   labelCol: { span: 8 },
@@ -22,11 +22,12 @@ const Login: React.FC = () => {
     useContext<IUserNameContext>(UserNameContext);
 
   if (userName) {
-    return <Redirect to="/list" />;
+    console.log("her");
+    return <Redirect to="/games" />;
   }
 
   const onFinish = (formValues: IFormValues): void => {
-    localStorage.setItem(LOCAL_STORAGE_NAME_KEY, formValues.userName);
+    setUserNameToLocalStorage(formValues.userName);
     onUserNameChange(formValues.userName);
   };
 

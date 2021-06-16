@@ -10,7 +10,8 @@ import Login from "./views/Login/Login";
 import Header from "./components/Header/Header";
 import AuthGuard from "./guards/AuthGuard";
 import { UserNameProvider } from "./context/UserNameContext";
-import GamesList from "./components/GamesList/GamesList";
+import GamesLobby from "./views/GamesLobby/GamesLobby";
+import Game from "./views/Game/Game";
 
 const App: React.FC = () => {
   return (
@@ -25,9 +26,14 @@ const App: React.FC = () => {
             <Route path="/login">
               <Login />
             </Route>
-            <Route path="/list">
+            <Route exact path="/games">
               <AuthGuard>
-                <GamesList />
+                <GamesLobby />
+              </AuthGuard>
+            </Route>
+            <Route path="/games/:id">
+              <AuthGuard>
+                <Game />
               </AuthGuard>
             </Route>
             <Route>

@@ -23,9 +23,9 @@ const useGetGames = (
 
   const fetchGames = async (): Promise<void> => {
     try {
+      setError(null);
       const games: IGame[] = await GameService.getInstance().getList(status);
       const gamesWithKey: IGameKey[] = addKeyPropToGame(games);
-      setError(null);
       setGames(gamesWithKey);
     } catch (e) {
       setError("Something went wrong, try later again");
