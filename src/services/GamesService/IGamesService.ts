@@ -4,9 +4,9 @@ export enum GAME_STATUS {
   FINISHED = "FINISHED",
 }
 
-type IBoardSign = 0 | 1 | 2;
-type IBoardRow = [IBoardSign, IBoardSign, IBoardSign];
-type IBoard = [IBoardRow, IBoardRow, IBoardRow];
+export type IBoardSign = 0 | 1 | 2;
+export type IBoardRow = [IBoardSign, IBoardSign, IBoardSign];
+export type IBoard = [IBoardRow, IBoardRow, IBoardRow];
 
 export interface IGame {
   _id: string;

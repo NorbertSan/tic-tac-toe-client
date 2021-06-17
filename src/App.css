@@ -1,1 +1,19 @@
 @import "~antd/dist/antd.css";
+
+.grid_board {
+  width: max-content;
+  display: grid;
+  grid-template-columns: repeat(3, 120px);
+  grid-template-rows: repeat(3, 120px);
+}
+
+.cell {
+  border: 1px solid rgb(179, 161, 161);
+  display: grid;
+  place-items: center;
+  font-size: 50px;
+}
+
+.disabled {
+  cursor: not-allowed;
+}

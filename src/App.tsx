@@ -15,7 +15,7 @@ import Game from "./views/Game/Game";
 
 const App: React.FC = () => {
   return (
-    <section className="max-w-screen-lg w-full mx-auto">
+    <section className="max-w-screen-lg w-full mx-auto h-screen">
       <UserNameProvider>
         <Router>
           <Header />

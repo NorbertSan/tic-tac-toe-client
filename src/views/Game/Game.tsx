@@ -1,26 +1,13 @@
 import { Spin } from "antd";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { GameService } from "../../services/GamesService/GamesService";
-import { IGame } from "../../services/GamesService/IGamesService";
+import { useParams } from "react-router-dom";
+import Board from "../../components/Board/Board";
+import useGetLiveGame from "../../hooks/useGetLiveGame";
+import { IBoard, IGame } from "../../services/GamesService/IGamesService";
 
 const Game: React.FC = () => {
-  const [game, setGame] = useState<IGame | null>(null);
   const { id }: { id: string } = useParams();
-  const history = useHistory();
-
-  const getGame = async () => {
-    try {
-      const gameRes: IGame = await GameService.getInstance().getGame(id);
-      setGame(gameRes);
-    } catch {
-      history.push("/games");
-    }
-  };
-
-  useEffect(() => {
-    getGame();
-  }, []);
+  const { game, isUserTurn, hasPlayerStarted } = useGetLiveGame(id);
 
   if (!game) {
     return (
@@ -29,8 +16,18 @@ const Game: React.FC = () => {
       </div>
     );
   }
-
-  return <div>{JSON.stringify(game)}</div>;
+  const fakeBoard: IBoard = [
+    [1, 1, 1],
+    [0, 0, 0],
+    [2, 2, 2],
+  ];
+  return (
+    <Board
+      board={fakeBoard}
+      isUserTurn={isUserTurn}
+      isPlayer1={hasPlayerStarted}
+    />
+  );
 };
 
 export default Game;
