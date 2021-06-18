@@ -1,6 +1,14 @@
+import { getUserNameFromLocalStorage } from "./../../helpers/local-storage-helpers";
+import { BOARD_SIGN } from "./../../constants/game";
 import { AxiosResponse } from "axios";
 import { ApiService } from "./../ApiService/ApiService";
-import { GAME_STATUS, ICreateGame, IGame } from "./IGamesService";
+import {
+  GAME_STATUS,
+  ICreateGame,
+  IGame,
+  IJoinGame,
+  IMakeMove,
+} from "./IGamesService";
 
 export class GameService {
   static instance: GameService | null = null;
@@ -22,7 +30,7 @@ export class GameService {
         },
       });
 
-    return gamesResponse.data;
+    return gamesResponse.data.reverse();
   }
 
   async getGame(gameId: string): Promise<IGame> {
@@ -39,5 +47,43 @@ export class GameService {
       await ApiService.getAxiosInstance().post("/games", requestBody);
 
     return gamesResponse.data;
+  }
+
+  async makeMove(
+    gameId: string,
+    sign: BOARD_SIGN,
+    cellNumber: number
+  ): Promise<IGame> {
+    const positionX = cellNumber % 3;
+    const positionY = Math.floor(cellNumber / 3);
+
+    const requestBody: IMakeMove = {
+      sign,
+      positionX,
+      positionY,
+      player: getUserNameFromLocalStorage(),
+    };
+
+    const gameResponse: AxiosResponse<IGame> =
+      await ApiService.getAxiosInstance().patch(
+        `/games/${gameId}/move`,
+        requestBody
+      );
+
+    return gameResponse.data;
+  }
+
+  async joinGame(gameId: string): Promise<IGame> {
+    const requestBody: IJoinGame = {
+      player: getUserNameFromLocalStorage(),
+    };
+
+    const gameResponse: AxiosResponse<IGame> =
+      await ApiService.getAxiosInstance().post(
+        `/games/${gameId}/connect`,
+        requestBody
+      );
+
+    return gameResponse.data;
   }
 }

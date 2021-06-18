@@ -17,3 +17,7 @@
 .disabled {
   cursor: not-allowed;
 }
+
+.indicator {
+  border-bottom: 5px solid rgb(58, 255, 124);
+}

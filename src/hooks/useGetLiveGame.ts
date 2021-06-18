@@ -1,3 +1,4 @@
+import { GAME_ERRORS_TYPES } from "./../constants/game-errors-types";
 import { PLAYER_SIGN } from "./../constants/game";
 import { getUserNameFromLocalStorage } from "./../helpers/local-storage-helpers";
 import { useHistory } from "react-router-dom";
@@ -9,6 +10,7 @@ import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { GameService } from "../services/GamesService/GamesService";
 import { getMovesAmount } from "../helpers/board";
+import { AxiosError } from "axios";
 
 const BASE_SERVER_URL = process.env.REACT_APP_BASE_API_URL;
 const userName = getUserNameFromLocalStorage();
@@ -26,25 +28,22 @@ const useGetLiveGame = (gameId: string): IUserGetLiveGameResponse => {
 
   const history = useHistory();
 
-  const connectToGame = (): void => {
-    try {
-      const socket = new SockJS(BASE_SERVER_URL + "gameplay");
-      const stompClient = Stomp.over(socket);
+  const connectToSocket = (): void => {
+    const socket = new SockJS(BASE_SERVER_URL + "gameplay");
+    const stompClient = Stomp.over(socket);
 
-      stompClient.connect({}, () => {
-        stompClient.subscribe(
-          "/topic/game-progress/" + gameId,
-          (response: any) => {
-            const game: IGame = JSON.parse(response.body);
-            if (game) {
-              setGame(game);
-            }
+    stompClient.connect({}, () => {
+      stompClient.subscribe(
+        "/topic/game-progress/" + gameId,
+        (response: any) => {
+          const game: IGame = JSON.parse(response.body);
+          console.log(game);
+          if (game) {
+            setGame(game);
           }
-        );
-      });
-    } catch {
-      history.push("/games");
-    }
+        }
+      );
+    });
   };
 
   const calculateUserTurn = () => {
@@ -69,20 +68,20 @@ const useGetLiveGame = (gameId: string): IUserGetLiveGameResponse => {
     setIsUserTurn(isPlayerTurn);
   };
 
-  const setStartedPlayer = () => {};
-
-  const getGame = async (): Promise<void> => {
+  const joinToGame = async (): Promise<void> => {
     try {
-      const game: IGame = await GameService.getInstance().getGame(gameId);
+      const game: IGame = await GameService.getInstance().joinGame(gameId);
       setHasPlayerStarted(game.player1 === userName);
       setGame(game);
-      connectToGame();
-    } catch {}
+      connectToSocket();
+    } catch {
+      history.push("/games");
+    }
   };
 
   useEffect(() => {
     if (gameId) {
-      getGame();
+      joinToGame();
     }
   }, [gameId]);
 

@@ -22,7 +22,6 @@ const Login: React.FC = () => {
     useContext<IUserNameContext>(UserNameContext);
 
   if (userName) {
-    console.log("her");
     return <Redirect to="/games" />;
   }
 

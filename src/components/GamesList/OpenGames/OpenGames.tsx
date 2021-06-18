@@ -48,20 +48,18 @@ const OpenGames: React.FC<IOpenGames> = ({ active }) => {
     );
   }
 
-  if (games.length === 0) {
-    return (
-      <Typography.Title className="text-center mt-8" level={5}>
-        No opened games
-      </Typography.Title>
-    );
-  }
-
   return (
     <>
-      <Table<IGameKey>
-        columns={getGamesListColumns(redirectToGame)}
-        dataSource={games}
-      />
+      {games.length === 0 ? (
+        <Typography.Title className="text-center mt-8" level={5}>
+          No opened games
+        </Typography.Title>
+      ) : (
+        <Table<IGameKey>
+          columns={getGamesListColumns(redirectToGame)}
+          dataSource={games}
+        />
+      )}
       <footer>
         <Button className="m-4" onClick={() => createNewGame()} type="primary">
           Create game

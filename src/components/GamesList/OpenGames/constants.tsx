@@ -21,7 +21,7 @@ export const getGamesListColumns: (
   {
     title: "Action",
     key: "action",
-    render: (text, item) => (
+    render: (_, item) => (
       <Button onClick={() => joinGame(item.gameId)} type="primary">
         Join
       </Button>

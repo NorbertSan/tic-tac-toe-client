@@ -19,7 +19,7 @@ export const FINISHED_COLUMNS_LIST: ColumnsType<IGameKey> = [
   },
   {
     title: "Winner",
-    dataIndex: "winner",
     key: "winner",
+    render: (_, item) => item.winner ?? "DRAW",
   },
 ];

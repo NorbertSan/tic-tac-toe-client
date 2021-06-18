@@ -1,0 +1,3 @@
+export enum GAME_ERRORS_TYPES {
+  NO_FREE_SLOTS = "NO_FREE_SLOTS",
+}
